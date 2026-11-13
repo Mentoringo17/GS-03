@@ -1,0 +1,20 @@
+!pip install rdkit py3Dmol
+
+from rdkit import Chem
+from rdkit.Chem import AllChem
+import py3Dmol
+
+print("Создаем 3D-модель GS-03...")
+
+smiles = "O=C(Nc1ccccc1OC)c2cc(F)ccc2N"
+mol = Chem.MolFromSmiles(smiles)
+
+mol = Chem.AddHs(mol)
+AllChem.EmbedMolecule(mol)
+mol_block = Chem.MolToMolBlock(mol)
+
+view = py3Dmol.view(width=600, height=400)
+view.addModel(mol_block, 'mol')
+view.setStyle({'stick': {'colorscheme': 'greenCarbon'}})
+view.zoomTo()
+view.show()
