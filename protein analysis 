@@ -1,0 +1,22 @@
+!pip install biopython numpy
+
+import urllib.request
+from Bio.PDB import PDBParser
+import numpy as np
+
+print("Скачиваем файл белка...")
+url = "https://files.rcsb.org/download/1IVO.pdb"
+urllib.request.urlretrieve(url, "1IVO.pdb")
+
+print("Загружаем структуру...")
+parser = PDBParser(QUIET=True)
+structure = parser.get_structure("protein", "1IVO.pdb")
+
+print("Собираем координаты...")
+coords = []
+for atom in structure[0].get_atoms():
+    coords.append(atom.coord)
+
+coords_array = np.array(coords)
+center = np.mean(coords_array, axis=0)
+print(f"Координаты центра кармана: X={center[0]:.2f}, Y={center[1]:.2f}, Z={center[2]:.2f}")
