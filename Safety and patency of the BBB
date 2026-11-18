@@ -1,18 +1,13 @@
 !pip install rdkit
-
 from rdkit import Chem
 from rdkit.Chem import Descriptors
-
 print("Запускаем проверку безопасности GS-03...\n")
-
 smiles = "O=C(Nc1ccccc1OC)c2cc(F)ccc2N"
 mol = Chem.MolFromSmiles(smiles)
-
 mass = Descriptors.MolWt(mol)
 logp = Descriptors.MolLogP(mol)
 tpsa = Descriptors.TPSA(mol)
 h_donors = Descriptors.NumHDonors(mol)
-
 print("=== Параметры ===")
 print(f"1. Масса: {mass:.2f} Да (норма < 400)")
 print(f"2. LogP: {logp:.2f} (норма 1.5 - 2.7)")
